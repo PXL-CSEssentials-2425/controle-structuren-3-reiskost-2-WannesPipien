@@ -48,23 +48,24 @@ namespace Reiskosten
             if(numberOfPersons == 2)
             {
                 hotelPrice = basePrice * numberOfPersons;
+            }
 
-                if (numberOfPersons >= 3)
+            if (numberOfPersons == 3)
+            {
+                hotelPrice = basePrice * 2;
+                hotelPrice += basePrice * 0.5f;
+            }
+
+            if (numberOfPersons >= 4)
+            {
+                hotelPrice = basePrice * 2;
+                hotelPrice += basePrice * 0.5f;
+                for (int i = 4; i <= numberOfPersons; i++)
                 {
-                    hotelPrice = basePrice * 2;
-                    hotelPrice += basePrice * 0.5f;
+                    hotelPrice += basePrice * 0.3f;
 
-                    if(numberOfPersons >= 4)
-                    {
-                        for(int i = 4; i >= numberOfPersons; i++)
-                        {
-                            hotelPrice += basePrice * 0.3f;
-
-                        }                   
-                    }
                 }
             }
-            
 
             StringBuilder result = new StringBuilder();
             result.AppendLine($"Reiskost voor de eerste vlucht naar {destinationTextBox.Text}");
