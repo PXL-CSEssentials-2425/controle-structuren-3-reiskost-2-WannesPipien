@@ -31,6 +31,7 @@ namespace Reiskosten
             double reduction = double.Parse(reductionPercentageTextBox.Text) * 0.01;
             string flightClass = flightClassTextBox.Text;
             float classMultiplier;
+            float hotelPrice = basePrice;
             switch (flightClass)
             {
                 case "1":
@@ -43,11 +44,33 @@ namespace Reiskosten
                     classMultiplier = 1f;
                         break;
             }
+
+            if(numberOfPersons == 2)
+            {
+                hotelPrice = basePrice * numberOfPersons;
+
+                if (numberOfPersons >= 3)
+                {
+                    hotelPrice = basePrice * 2;
+                    hotelPrice += basePrice * 0.5f;
+
+                    if(numberOfPersons >= 4)
+                    {
+                        for(int i = 4; i >= numberOfPersons; i++)
+                        {
+                            hotelPrice += basePrice * 0.3f;
+
+                        }                   
+                    }
+                }
+            }
+            
+
             StringBuilder result = new StringBuilder();
             result.AppendLine($"Reiskost voor de eerste vlucht naar {destinationTextBox.Text}");
             result.AppendLine();
             result.AppendLine($"Totale vluchtprijs: {baseFlight * numberOfPersons * classMultiplier} Euro");
-            result.AppendLine($"Totale verblijfprijs: {numberOfDays * basePrice} Euro");
+            result.AppendLine($"Totale verblijfprijs: {numberOfDays * hotelPrice} Euro");
             result.AppendLine($"Totale reisprijs: {total} Euro");
             result.AppendLine($"Korting: {total * reduction} Euro");
             result.AppendLine();
